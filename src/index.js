@@ -1,47 +1,55 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
 import {createStore} from 'redux';
-const reducer = (state = 0, action) => {
-    switch (action.type) {
-        case 'INC':
-            return state + 1;
-        case 'DEC':
-            return state - 1;
-        case 'RFR':
-            return 0;
-        case 'RND':
-            return state + action.value;
-        default:
-            return state;
-    } 
-    
-}
+import {Provider} from 'react-redux';
+import reducer from './reducer';
+//import {inc, dec, rfr} from './actions';
+//import * as actions from './actions';
+import App from './components/app';
 
-const inc = () => ({type: 'INC'});
-const dec = () => ({type: 'DEC'});
-const rnd = (value) => ({type: 'RND', value});
-const rfr = (value) => ({type: 'RFR'});
+
 
 const store = createStore(reducer);
-document.getElementById('inc').addEventListener('click', () => {
-    store.dispatch(inc())
-});
-document.getElementById('dec').addEventListener('click', () => {
-    store.dispatch(dec())
-});
+//const {dispatch} = store;
+
+// actions = {
+//     inc: inc,
+//     dec: dec,
+//     rfr: rfr
+// }
+
+// const bindActionCreator = (creator, dispatch) => (...args) => {
+//     dispatch(creator(...args));
+// }
+
+//const {inc, dec, rfr} = bindActionCreators(actions, dispatch);
+// const decDispatch = bindActionCreators(dec, dispatch);
+// const rfrDispatch = bindActionCreators(rfr, dispatch);
+//const rndDispatch = bindActionCreator(rnd, dispatch);
+//document.getElementById('inc').addEventListener('click', inc);
+//document.getElementById('dec').addEventListener('click', dec);
 
 // document.getElementById('rnd').addEventListener('click', () => {
 //     const value = Math.floor(Math.random() * 10);
-//     store.dispatch(rnd(value))
+//     rndDispatch(value)
 // });
-document.getElementById('rfr').addEventListener('click', () => {
-    store.dispatch(rfr())
-});
+//document.getElementById('rfr').addEventListener('click', rfr);
 
 
-const update = () => {
-    document.getElementById('counter').textContent = store.getState();
-}
-store.subscribe(update);
+
+    //document.getElementById('counter').textContent = store.getState();
+    ReactDOM.render(
+        <Provider store={store}>
+            <App />
+        </Provider>
+    
+    , document.getElementById('root'));
+
+// update();
+// store.subscribe(update);
 
 // store.dispatch({type: 'INC'})
 // store.dispatch({type: 'INC'})
+
+
 
